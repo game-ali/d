@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Computer Architecture - Instruction Formats Q&A</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f9fd; color: #1a237e; margin: 0; padding: 0; }
+    header { background: linear-gradient(90deg, #005bea 0%, #3ec6e0 100%); color: white; text-align: center; padding: 24px 0 18px 0; font-size: 2em; }
+    .main { max-width: 900px; margin: 30px auto; background: #fff; border-radius: 14px; box-shadow: 0 3px 18px #005bea1a; padding: 30px 24px 22px 24px; }
+    h2 { color: #005bea; border-left: 5px solid #3ec6e0; padding-left: 12px; margin: 24px 0 14px 0; font-size: 1.19em; }
+    .q { font-weight: bold; color: #0d47a1; margin-bottom: 2px; }
+    .a { color: #2e7d32; margin-bottom: 18px;}
+    code, pre { font-size: 1.09em; background: #e8f0fe; padding: 2px 5px; border-radius: 5px;}
+    ul {margin: 5px 0 14px 20px;}
+    li {line-height: 1.7;}
+    .section { margin-bottom: 38px; }
+    .sol-title { font-weight: bold; color: #005bea; margin: 12px 0 8px 0; font-size: 1.11em; }
+  </style>
+</head>
+<body>
+  <header>
+<a href="As.Mid.html">Back</a>
+    Computer Architecture: Instruction Formats & Fields Q&A<br>
+<a href="quiz-C_A.html">Click here for quiz</a>---
+    <a href="note.html">Click to Also read more note</a>
+  </header>
+  <div class="main">
+    <h2>Questions</h2>
+    <div class="section">
+      <ol>
+        <li>What are the three (3) basic computer instruction formats?</li>
+        <li>What is opcode (operation code) and operand?</li>
+        <li>What are the different fields of instructions?</li>
+      </ol>
+    </div>
+    <h2>Solutions</h2>
+    <div class="section">
+      <div class="sol-title">1. Basic Computer Instruction Formats</div>
+      <ul>
+        <li>
+          <b>Memory-Reference Instructions:</b>
+          <br>These involve an opcode and a memory address field. They perform operations like loading from memory to register or storing from register to memory. Addressing modes (direct/indirect) are supported. Typical format: <b>opcode</b> + addressing mode bit + memory address.
+        </li>
+        <li>
+          <b>Register-Reference Instructions:</b>
+          <br>Operate directly on registers (not memory). Format includes an opcode for a register operation, and bits indicating the specific operation (e.g., complement, increment, clear a register).
+        </li>
+        <li>
+          <b>Input/Output Instructions:</b>
+          <br>Used for communication with external devices. Format specifies opcode for I/O and bits to identify device or operation. Distinct from memory/register instructions.
+        </li>
+      </ul>
+      <div class="sol-title">2. Opcode and Operand</div>
+      <ul>
+        <li>
+          <b>Opcode (Operation Code):</b> The part of a machine instruction that tells the CPU what operation to perform (e.g., add, subtract, load, jump).
+        </li>
+        <li>
+          <b>Operand:</b> The data or address the opcode works on. Can be constants, variables, memory addresses, or registers.<br>
+          <i>Example:</i> In <code>ADD AX, BX</code>, <b>ADD</b> is the opcode, <b>AX</b> and <b>BX</b> are operands.
+        </li>
+      </ul>
+      <div class="sol-title">3. Fields of Instructions</div>
+      <ul>
+        <li>
+          <b>Opcode Field:</b> Specifies the operation to perform (add, load, store, jump, etc.).
+        </li>
+        <li>
+          <b>Operand/Address Field(s):</b> Shows the data or location (register or memory) for the operation. Could be one or more fields.
+        </li>
+        <li>
+          <b>Addressing Mode Field:</b> Tells how to interpret the operand fields (e.g., direct, indirect, immediate, register).
+        </li>
+        <li>
+          <b>Additional Fields (Optional):</b>
+          <ul>
+            <li>Register specifier fields (which registers involved)</li>
+            <li>Instruction format/extension fields (sub-operations/variants)</li>
+            <li>Condition or flag fields (for conditional instructions)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</body>
+</html>
