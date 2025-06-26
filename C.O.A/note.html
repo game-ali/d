@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Computer Architecture - Easy Notes</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body {font-family: 'Segoe UI', Arial, sans-serif; background: #f2f6fa; color: #1a237e; margin: 0;}
+    header {background: linear-gradient(90deg,#005bea 0%,#3ec6e0 100%); color: #fff; font-size: 2em; text-align: center; padding: 24px 0 18px 0;}
+    .main {max-width: 820px; margin: 30px auto; background: #fff; border-radius: 14px; box-shadow: 0 3px 18px #005bea1a; padding: 30px 24px 22px 24px;}
+    h2 {color: #005bea; border-left: 5px solid #3ec6e0; padding-left: 12px; margin: 30px 0 18px 0; font-size: 1.15em;}
+    ul {padding-left: 22px;}
+    li {margin-bottom: 13px; line-height: 1.65;}
+    .sublist {margin-top: 7px; margin-bottom: 12px;}
+    .key {font-weight: bold; color: #0d47a1;}
+    @media (max-width: 600px) {.main{padding: 8px 4px;} header{font-size:1.16em;}}
+  </style>
+</head>
+<body>
+  <header>Computer Architecture & Organization - Simple Notes<br>
+<a href="quiz-C_A.html">Click here for quiz</a>
+  </header>
+  <div class="main">
+    <h2>1. Basic Computer Units & Their Functions</h2>
+    <ul>
+      <li><span class="key">Functional Units:</span> Input, Memory, ALU (Arithmetic and Logic Unit), Output, Control Unit, Interconnection Network.</li>
+      <li><span class="key">Input Unit:</span> Gets data from outside (keyboard, mouse) and sends it to computer memory or processor.</li>
+      <li><span class="key">Memory:</span> Stores data and instructions for processing or later use.</li>
+      <li><span class="key">Program:</span> Set of instructions in memory that tell the computer what to do with data.</li>
+      <li><span class="key">Output Unit:</span> Sends results to outside devices (monitor, printer, etc).</li>
+      <li><span class="key">Control Unit:</span> Directs and coordinates all operations by sending control signals.</li>
+      <li><span class="key">Interconnection Network:</span> Lets all units exchange data and signals (like a highway for data).</li>
+      <li><span class="key">Primary Memory vs Secondary Storage:</span> Primary memory (RAM) is fast and temporary; secondary storage (like hard disks) is slower and permanent.</li>
+      <li><span class="key">Cache Memory:</span> Small, very fast memory close to the CPU to speed up processing of frequently used data.</li>
+      <li><span class="key">ALU:</span> Does all the math (add, subtract) and logic (compare, AND, OR) operations.</li>
+      <li><span class="key">Arithmetic Operations:</span> CPU fetches data from memory, processes with ALU, and stores result back in registers or memory.</li>
+      <li><span class="key">Instruction Register (IR):</span> Holds the current instruction being executed.</li>
+      <li><span class="key">Load Instruction Steps:</span>
+        <ul class="sublist">
+          <li>Fetch instruction from memory</li>
+          <li>Decode the operation</li>
+          <li>Fetch operand from memory location</li>
+          <li>Store operand in register</li>
+        </ul>
+      </li>
+      <li><span class="key">Add Instruction:</span> Adds contents of two registers and stores the result in another register.</li>
+      <li><span class="key">Processor-Memory Communication:</span> Uses control signals (read/write) and addresses to move data between CPU and memory.</li>
+    </ul>
+
+    <h2>2. CPU Registers & Data Flow Basics</h2>
+    <ul>
+      <li><span class="key">Program Counter (PC):</span> Holds address of the next instruction to execute.</li>
+      <li><span class="key">Instruction Register (IR):</span> Holds the instruction currently being executed.</li>
+      <li><span class="key">General-Purpose Registers:</span> Store temporary data and calculation results.</li>
+      <li><span class="key">Memory Address Register (MAR):</span> Holds address for memory read/write.</li>
+      <li><span class="key">Memory Data Register (MDR):</span> Holds data being transferred to or from memory.</li>
+      <li><span class="key">Accumulator:</span> Register used by ALU to store input and results of operations.</li>
+      <li><span class="key">Processor-Memory Interface:</span> Controls transfer of data between CPU and memory.</li>
+      <li><span class="key">Program Execution Cycle:</span>
+        <ul class="sublist">
+          <li>Load program into memory</li>
+          <li>Set PC to first instruction</li>
+          <li>Fetch instruction</li>
+          <li>Decode & execute instruction</li>
+          <li>Fetch operands, do operation, store results</li>
+          <li>Repeat for next instruction</li>
+        </ul>
+      </li>
+      <li><span class="key">Interrupt:</span> A signal that makes the CPU stop current work to handle an urgent task.</li>
+      <li><span class="key">Von Neumann Architecture:</span> Uses same memory for data and instructions. Components: CPU, memory, buses, I/O.</li>
+      <li><span class="key">Von Neumann CPU Parts:</span> Control Unit, ALU, Registers (PC, IR, AC, MAR, MDR).</li>
+      <li><span class="key">System Buses:</span>
+        <ul class="sublist">
+          <li>Data Bus: Carries data</li>
+          <li>Address Bus: Carries addresses</li>
+          <li>Control Bus: Carries control signals</li>
+        </ul>
+      </li>
+      <li><span class="key">Control Unit:</span> Coordinates all CPU activities with control signals.</li>
+      <li><span class="key">I/O Devices:</span> Send and receive data between CPU and outside world.</li>
+      <li><span class="key">Primary Memory Types:</span> RAM (temporary, fast), ROM (permanent, for boot programs).</li>
+    </ul>
+  </div>
+</body>
+</html>

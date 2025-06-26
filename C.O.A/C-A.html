@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Computer Architecture & Pipelining - Q&A</title>
+    <style>
+        body {
+            background: #f0f3fa;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            color: #222;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(90deg, #005bea 0%, #3ec6e0 100%);
+            color: white;
+            padding: 30px 0 18px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-size: 2.2em;
+            letter-spacing: 1px;
+        }
+        section {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+            padding: 32px 32px 20px 32px;
+        }
+        h2 {
+            color: #005bea;
+            border-left: 5px solid #3ec6e0;
+            padding-left: 12px;
+            margin: 32px 0 14px 0;
+            font-size: 1.4em;
+            letter-spacing: 1px;
+        }
+        ul.qalist {
+            list-style: none;
+            padding: 0;
+        }
+        ul.qalist li {
+            background: linear-gradient(90deg, #e8f0fe 0%, #f9fafd 100%);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            padding: 18px 22px;
+            transition: box-shadow 0.2s;
+        }
+        ul.qalist li:hover {
+            box-shadow: 0 8px 24px rgba(0,91,234,0.1);
+            background: linear-gradient(90deg, #f1f9ff 0%, #e7f8fb 100%);
+        }
+        .question {
+            font-weight: bold;
+            color: #0d47a1;
+            margin-bottom: 7px;
+            font-size: 1.07em;
+        }
+        .answer {
+            color: #222;
+            line-height: 1.6;
+            margin-left: 8px;
+        }
+
+        @media (max-width: 600px) {
+            section {
+                padding: 14px 6px;
+            }
+            header {
+                font-size: 1.3em;
+                padding: 20px 0 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Computer Architecture & Pipelining<br>Q&A Guide
+        <br>
+        <a href="quiz-C_A.html">Click here for quiz</a>---
+        <a href="note.html">Click to Also read more note</a>
+    </header>
+    <section>
+        <h2>PART 1: Basic Structure & Functional Units</h2>
+        <ul class="qalist">
+            <li><span class="question">1. What are the basic functional units of a computer?</span>
+                <br><span class="answer">Input unit, memory unit, arithmetic and logic unit (ALU), output unit, control unit, and interconnection network.</span></li>
+            <li><span class="question">2. What is the function of the input unit?</span>
+                <br><span class="answer">Accepts information from outside (keyboard, mouse) and sends it to the processor.</span></li>
+            <li><span class="question">3. Where is data stored after being received from the input unit?</span>
+                <br><span class="answer">In the computer’s memory, for processing or later use.</span></li>
+            <li><span class="question">4. What specifies the operations to be performed on the stored data?</span>
+                <br><span class="answer">A program, which is a sequence of instructions stored in memory.</span></li>
+            <li><span class="question">5. How are results delivered to the external world from the computer system?</span>
+                <br><span class="answer">Through the output unit, using devices like monitor and printer.</span></li>
+            <li><span class="question">6. What is the role of the control unit?</span>
+                <br><span class="answer">Directs and coordinates all operations by sending control signals.</span></li>
+            <li><span class="question">7. What is the role of the interconnection network?</span>
+                <br><span class="answer">Allows all units to communicate and exchange data/signals.</span></li>
+            <li><span class="question">8. What distinguishes primary memory from secondary storage?</span>
+                <br><span class="answer">Primary memory is fast and volatile (RAM); secondary storage is slower, non-volatile (hard disk).</span></li>
+            <li><span class="question">9. What is cache memory and why is it important?</span>
+                <br><span class="answer">Small, fast memory that stores frequently used data to speed up execution.</span></li>
+            <li><span class="question">10. What is the function of the ALU in a computer?</span>
+                <br><span class="answer">Performs arithmetic (add, subtract) and logic (AND, OR) operations.</span></li>
+        </ul>
+
+        <h2>PART 2: Registers, Data Path & Von Neumann Architecture</h2>
+        <ul class="qalist">
+            <li><span class="question">1. What is the function of the Program Counter (PC) in a computer system?</span>
+                <br><span class="answer">Holds the address of the next instruction to fetch.</span></li>
+            <li><span class="question">2. What role does the Instruction Register (IR) play during program execution?</span>
+                <br><span class="answer">Holds the current instruction being executed.</span></li>
+            <li><span class="question">3. Explain the function of general-purpose registers (R0 to Rn−1).</span>
+                <br><span class="answer">Temporarily store operands and results for quick access.</span></li>
+            <li><span class="question">4. What does the Memory Address Register (MAR) do?</span>
+                <br><span class="answer">Holds the address for memory access (read or write).</span></li>
+            <li><span class="question">5. What is stored in the Memory Data Register (MDR)?</span>
+                <br><span class="answer">Holds the data being transferred to or from memory.</span></li>
+            <li><span class="question">6. Describe the purpose of the Accumulator register.</span>
+                <br><span class="answer">Used to store intermediate results of arithmetic/logic operations.</span></li>
+            <li><span class="question">7. What is the function of the processor–memory interface?</span>
+                <br><span class="answer">Controls data transfer between processor and memory (using control signals).</span></li>
+            <li><span class="question">8. Outline the typical steps involved in program execution.</span>
+                <br><span class="answer">Load program, set PC, fetch instruction, decode, execute, store results, repeat.</span></li>
+            <li><span class="question">9. What is an interrupt and when does it occur?</span>
+                <br><span class="answer">A signal for immediate processor attention, e.g., from hardware or urgent event.</span></li>
+            <li><span class="question">10. Define Von Neumann Architecture.</span>
+                <br><span class="answer">Computer design where both data and instructions are stored in the same memory.</span></li>
+        </ul>
+
+        <h2>PART 3: Number Systems & Computer Arithmetic</h2>
+        <ul class="qalist">
+            <li><span class="question">1. Define unsigned integers in binary. Give two examples.</span>
+                <br><span class="answer">Binary numbers that are always positive. Examples: memory addresses, roll numbers.</span></li>
+            <li><span class="question">2. What is the main difference between signed and unsigned binary numbers?</span>
+                <br><span class="answer">Signed can be negative or positive; unsigned are only positive.</span></li>
+            <li><span class="question">3. What does the Most Significant Bit (MSB) indicate in signed numbers?</span>
+                <br><span class="answer">0 for positive, 1 for negative.</span></li>
+            <li><span class="question">4. List the three systems for representing signed binary numbers.</span>
+                <br><span class="answer">Signed magnitude, 1’s complement, 2’s complement.</span></li>
+            <li><span class="question">5. How is a negative number represented in signed magnitude?</span>
+                <br><span class="answer">Set MSB to 1. Example: +5 = 0101, -5 = 1101.</span></li>
+            <li><span class="question">6. How do you get the 1’s complement of a binary number?</span>
+                <br><span class="answer">Flip each bit (0 to 1, 1 to 0).</span></li>
+            <li><span class="question">7. Why does two’s complement have a unique zero representation?</span>
+                <br><span class="answer">Both +0 and -0 are 0000.</span></li>
+            <li><span class="question">8. What is the advantage of fixed-point representation?</span>
+                <br><span class="answer">Fast and easy calculations.</span></li>
+            <li><span class="question">9. What are the three main fields in fixed-point numbers?</span>
+                <br><span class="answer">Sign, integer, and fractional fields.</span></li>
+            <li><span class="question">10. What is normalization in floating point?</span>
+                <br><span class="answer">Adjusting the number so only one non-zero digit is left of the point.</span></li>
+        </ul>
+
+        <h2>PART 4: Memory System Design & I/O</h2>
+        <ul class="qalist">
+            <li><span class="question">1. What is RAM and what is its main feature?</span>
+                <br><span class="answer">Random Access Memory; fast, volatile, used for temporary data storage.</span></li>
+            <li><span class="question">2. What is the main purpose of ROM?</span>
+                <br><span class="answer">Read Only Memory; stores permanent data like BIOS.</span></li>
+            <li><span class="question">3. What is cache memory?</span>
+                <br><span class="answer">A small, very fast memory between CPU and main memory for frequently accessed data.</span></li>
+            <li><span class="question">4. What is memory interleaving?</span>
+                <br><span class="answer">Splitting memory into modules to allow simultaneous access and faster data fetching.</span></li>
+            <li><span class="question">5. What is direct mapping in cache?</span>
+                <br><span class="answer">Each block of memory maps to only one possible cache location.</span></li>
+            <li><span class="question">6. What is associative mapping in cache?</span>
+                <br><span class="answer">Any memory block can go anywhere in the cache.</span></li>
+            <li><span class="question">7. What is set-associative mapping?</span>
+                <br><span class="answer">Cache is divided into sets; each memory block can go in any slot within a set.</span></li>
+            <li><span class="question">8. What is a cache hit and a cache miss?</span>
+                <br><span class="answer">Hit: data found in cache; miss: data not found (must fetch from main memory).</span></li>
+            <li><span class="question">9. What is DMA (Direct Memory Access)?</span>
+                <br><span class="answer">A method for devices to transfer data to/from memory without CPU involvement.</span></li>
+            <li><span class="question">10. What is the difference between isolated I/O and memory-mapped I/O?</span>
+                <br><span class="answer">Isolated I/O has separate address space for I/O; memory-mapped I/O uses same space as memory.</span></li>
+        </ul>
+
+        <h2>PART 5: Pipelining and Parallel Processors</h2>
+        <ul class="qalist">
+            <li><span class="question">1. What is pipelining in computer architecture?</span>
+                <br><span class="answer">Pipelining is dividing a task into separate stages, with each stage handled by a different processor segment, so multiple instructions can be in progress at the same time.</span></li>
+            <li><span class="question">2. How does instruction pipelining increase CPU performance?</span>
+                <br><span class="answer">It overlaps the execution of multiple instructions, so a new instruction can start before the previous one finishes, increasing throughput.</span></li>
+            <li><span class="question">3. What are the three main types of pipeline hazards?</span>
+                <br><span class="answer">Data hazards (data dependencies), control hazards (branches/jumps), and structural hazards (hardware resource conflicts).</span></li>
+            <li><span class="question">4. What is a data hazard? Give one example.</span>
+                <br><span class="answer">A data hazard occurs when instructions depend on the results of previous instructions. Example: If instruction 2 needs the result of instruction 1, but instruction 1 hasn't finished yet.</span></li>
+            <li><span class="question">5. What is a multiprocessor system?</span>
+                <br><span class="answer">A computer system with two or more CPUs working together, sharing memory and I/O, to run multiple tasks or split one job into several parts.</span></li>
+            <li><span class="question">6. What is the difference between UMA and NUMA memory organizations?</span>
+                <br><span class="answer">UMA (Uniform Memory Access): All CPUs access memory with the same speed. NUMA (Non-Uniform Memory Access): Each CPU has local memory (faster) and remote memory (slower to access).</span></li>
+            <li><span class="question">7. Name two common interconnection network topologies in multiprocessors.</span>
+                <br><span class="answer">Bus (all CPUs share a single path) and Mesh (CPUs arranged in a grid, each connected to neighbors).</span></li>
+            <li><span class="question">8. What is cache coherence and why is it important?</span>
+                <br><span class="answer">Cache coherence means all CPUs have the latest, correct version of shared data in their caches. It's important to avoid errors when different CPUs work on the same memory locations.</span></li>
+            <li><span class="question">9. Briefly explain the write-through and write-back cache protocols.</span>
+                <br><span class="answer">Write-through: Data is written to both cache and main memory immediately. Write-back: Data is written to cache first, and main memory is updated later.</span></li>
+            <li><span class="question">10. What is a snoopy cache protocol?</span>
+                <br><span class="answer">A method where each cache monitors (snoops) the bus to track changes made by other CPUs, keeping cache data coherent in small/bus-based multiprocessor systems.</span></li>
+        </ul>
+    </section>
+</body>
+</html>
+````

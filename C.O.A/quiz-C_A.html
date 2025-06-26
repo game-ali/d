@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Computer Architecture Quiz Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #f1f5fe;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #1a237e;
+        }
+        header {
+            background: linear-gradient(90deg, #005bea 0%, #3ec6e0 100%);
+            color: white;
+            padding: 30px 0 18px 0;
+            text-align: center;
+            font-size: 2.2em;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+            padding: 30px 22px 28px 22px;
+        }
+        .question-box {
+            margin-bottom: 30px;
+            min-height: 80px;
+        }
+        .question-number {
+            font-size: 1.2em;
+            color: #3ec6e0;
+            font-weight: bold;
+        }
+        .question {
+            font-size: 1.22em;
+            margin: 8px 0 0 0;
+            color: #0d47a1;
+        }
+        .answer-input {
+            width: 98%;
+            font-size: 1.1em;
+            padding: 10px;
+            border: 2px solid #cfd8dc;
+            border-radius: 8px;
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+        .answer-btn, .restart-btn {
+            padding: 11px 28px;
+            background: linear-gradient(90deg, #005bea 0%, #3ec6e0 100%);
+            border: none;
+            color: white;
+            font-size: 1.08em;
+            border-radius: 9px;
+            cursor: pointer;
+            margin-top: 12px;
+            margin-bottom: 10px;
+            transition: background 0.2s;
+        }
+        .answer-btn:hover, .restart-btn:hover {
+            background: linear-gradient(90deg, #3ec6e0 0%, #005bea 100%);
+        }
+        .feedback {
+            font-size: 1.1em;
+            margin: 10px 0 0 0;
+            min-height: 28px;
+        }
+        .correct {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        .score {
+            font-size: 1.18em;
+            color: #0d47a1;
+            margin-top: 18px;
+            margin-bottom: 12px;
+        }
+        .final-results {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        a{
+            font-size: 12px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px 5px 20px 5px;
+            }
+            header {
+                font-size: 1.3em;
+                padding: 18px 0 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Computer Architecture & Pipelining<br>Interactive Quiz Game
+        <br>
+        <a href="C-A.html">Click here to read note</a>---
+        <a href="note.html">Click to Also read more note</a>
+    </header>
+    <div class="container">
+        <div class="question-box">
+            <div class="question-number" id="question-number"></div>
+            <div class="question" id="question"></div>
+            <input type="text" class="answer-input" id="user-answer" placeholder="Type your answer here..." autocomplete="off" autofocus>
+            <button class="answer-btn" id="submit-btn" onclick="submitAnswer()">Submit</button>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="score" id="score"></div>
+        <div class="final-results" id="final-results" style="display:none"></div>
+        <button class="restart-btn" id="restart-btn" style="display:none" onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+    <script>
+        // Questions and Answers (Simple, short-answer style)
+        // To make it more game-like, only keywords need be matched for 'correct'
+        const questions = [
+            // PART 1: Basic Structure & Functional Units
+            {
+                q: "Name any two basic functional units of a computer.",
+                a: ["input", "memory", "arithmetic", "logic", "alu", "output", "control", "interconnection"]
+            },
+            {
+                q: "What is the main job of the input unit?",
+                a: ["accepts", "receives", "gets", "input", "data", "from outside", "from user"]
+            },
+            {
+                q: "Where does data go after being received from the input unit?",
+                a: ["memory"]
+            },
+            {
+                q: "What specifies what operations are performed on data?",
+                a: ["program", "instructions", "code"]
+            },
+            {
+                q: "Which unit delivers results to the outside world?",
+                a: ["output"]
+            },
+            {
+                q: "Which unit coordinates the operation of all others?",
+                a: ["control"]
+            },
+            {
+                q: "What is the purpose of the interconnection network?",
+                a: ["communication", "connect", "exchange", "data", "signals"]
+            },
+            {
+                q: "Which is faster and volatile: primary memory or secondary storage?",
+                a: ["primary", "ram"]
+            },
+            {
+                q: "Why is cache memory important?",
+                a: ["speed", "fast", "frequent", "stores frequently", "recently used", "quick"]
+            },
+            {
+                q: "What does the ALU do?",
+                a: ["arithmetic", "logic", "add", "subtract", "and", "or", "operations"]
+            },
+            // PART 2: Registers, Data Path & Von Neumann Architecture
+            {
+                q: "What does the Program Counter (PC) store?",
+                a: ["address", "next instruction"]
+            },
+            {
+                q: "What is the function of the Instruction Register (IR)?",
+                a: ["current instruction", "holds instruction"]
+            },
+            {
+                q: "What is the role of general-purpose registers?",
+                a: ["store", "temporary", "operands", "results", "fast access"]
+            },
+            {
+                q: "What does the Memory Address Register (MAR) hold?",
+                a: ["address"]
+            },
+            {
+                q: "What does the Memory Data Register (MDR) contain?",
+                a: ["data"]
+            },
+            {
+                q: "What is the accumulator used for?",
+                a: ["intermediate", "results", "arithmetic", "logic"]
+            },
+            {
+                q: "What does the processor–memory interface control?",
+                a: ["data transfer", "read", "write", "memory"]
+            },
+            {
+                q: "Name any one step in a typical program execution cycle.",
+                a: ["fetch", "decode", "execute", "store", "repeat", "load"]
+            },
+            {
+                q: "What is an interrupt?",
+                a: ["signal", "attention", "event", "urgent", "pause", "suspend", "interrupt"]
+            },
+            {
+                q: "What is the main idea of the Von Neumann Architecture?",
+                a: ["same memory", "data and instructions", "cpu", "memory", "buses"]
+            },
+            // PART 3: Number Systems & Computer Arithmetic
+            {
+                q: "Are unsigned integers always positive or can be negative?",
+                a: ["positive"]
+            },
+            {
+                q: "What does the Most Significant Bit (MSB) indicate in signed numbers?",
+                a: ["sign", "0 for positive", "1 for negative"]
+            },
+            {
+                q: "Name any system for representing signed binary numbers.",
+                a: ["signed magnitude", "1’s complement", "ones complement", "2’s complement", "twos complement"]
+            },
+            {
+                q: "What is the main difference between fixed-point and floating-point representation?",
+                a: ["fixed decimal", "fixed point", "floating point", "decimal moves", "range", "accuracy", "precision"]
+            },
+            {
+                q: "What is normalization in floating point?",
+                a: ["one non-zero digit", "left of point", "standard form"]
+            },
+            {
+                q: "What is the first step to get the 1’s complement of a binary number?",
+                a: ["flip", "invert", "change", "0 to 1", "1 to 0"]
+            },
+            {
+                q: "Name any one field in a fixed-point number.",
+                a: ["sign", "integer", "fraction"]
+            },
+            {
+                q: "What is a unique property of two's complement zero?",
+                a: ["unique", "only one", "no -0", "zero representation"]
+            },
+            {
+                q: "What is the advantage of using cache memory?",
+                a: ["fast", "quick", "speeds up", "performance", "stores frequently used"]
+            },
+            {
+                q: "Give one example of a real-life quantity using unsigned integers.",
+                a: ["roll number", "memory address", "address", "id"]
+            },
+            // PART 4: Memory System Design & I/O
+            {
+                q: "What type of memory is RAM?",
+                a: ["volatile", "fast", "temporary", "random access"]
+            },
+            {
+                q: "What is the main function of ROM?",
+                a: ["permanent", "stores bios", "read only", "non-volatile"]
+            },
+            {
+                q: "What is memory interleaving?",
+                a: ["modules", "simultaneous", "split", "access", "faster", "banks"]
+            },
+            {
+                q: "What is a cache hit?",
+                a: ["data found", "in cache"]
+            },
+            {
+                q: "What is a cache miss?",
+                a: ["not in cache", "fetch main memory"]
+            },
+            {
+                q: "What is DMA (Direct Memory Access)?",
+                a: ["devices", "transfer", "memory", "no cpu", "without cpu"]
+            },
+            {
+                q: "What is the difference between isolated I/O and memory-mapped I/O?",
+                a: ["separate", "address space", "same space", "shared", "memory-mapped"]
+            },
+            {
+                q: "What is associative mapping in cache?",
+                a: ["anywhere", "any block", "any cache location"]
+            },
+            {
+                q: "What is set-associative mapping?",
+                a: ["sets", "block", "slots", "group", "within set"]
+            },
+            // PART 5: Pipelining and Parallel Processors
+            {
+                q: "What is pipelining in computer architecture?",
+                a: ["stages", "steps", "simultaneous", "multiple instructions", "progress", "pipeline"]
+            },
+            {
+                q: "How does instruction pipelining increase CPU performance?",
+                a: ["overlap", "multiple", "parallel", "faster", "throughput"]
+            },
+            {
+                q: "Name one type of pipeline hazard.",
+                a: ["data hazard", "control hazard", "structural hazard", "dependency", "branch"]
+            },
+            {
+                q: "What is a multiprocessor system?",
+                a: ["multiple cpus", "more than one", "processors", "together", "parallel"]
+            },
+            {
+                q: "What does UMA stand for in memory organization?",
+                a: ["uniform memory access", "same speed"]
+            },
+            {
+                q: "What is NUMA?",
+                a: ["non-uniform memory access", "local memory", "remote memory", "different speed"]
+            },
+            {
+                q: "Name one interconnection network topology in multiprocessors.",
+                a: ["bus", "mesh", "ring", "crossbar", "torus"]
+            },
+            {
+                q: "What is cache coherence?",
+                a: ["same data", "up to date", "correct", "all cpus", "synchronize"]
+            },
+            {
+                q: "What is the write-through protocol?",
+                a: ["write both", "to cache and memory", "immediately"]
+            },
+            {
+                q: "What is the write-back protocol?",
+                a: ["write to cache first", "memory later", "delayed update"]
+            },
+            {
+                q: "What is a snoopy cache protocol?",
+                a: ["monitor", "snoop", "bus", "track changes", "coherent", "other cpus"]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function displayQuestion() {
+            document.getElementById('feedback').innerHTML = "";
+            document.getElementById('user-answer').value = "";
+            document.getElementById('question-number').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('question').textContent = questions[currentQuestion].q;
+            document.getElementById('score').textContent = `Score: ${score} / ${currentQuestion}`;
+            document.getElementById('final-results').style.display = 'none';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('user-answer').focus();
+        }
+
+        function checkAnswer(userInput, answers) {
+            userInput = userInput.trim().toLowerCase();
+            if (!userInput) return false;
+            for (let ans of answers) {
+                // Accept if any keyword/phrase in answer array appears in the user's input
+                if (userInput.includes(ans)) return true;
+            }
+            return false;
+        }
+
+        function submitAnswer() {
+            const userInput = document.getElementById('user-answer').value;
+            const answers = questions[currentQuestion].a;
+            const isCorrect = checkAnswer(userInput, answers);
+            const feedbackDiv = document.getElementById('feedback');
+
+            if (isCorrect) {
+                feedbackDiv.innerHTML = "<span class='correct'>Correct!</span>";
+                score++;
+            } else {
+                feedbackDiv.innerHTML = "<span class='incorrect'>Incorrect.</span> <br><span style='color:#005bea'>Sample answer: </span>" +
+                  "<span style='color:#333'>" + answers[0].charAt(0).toUpperCase() + answers[0].slice(1) + "...</span>";
+            }
+
+            document.getElementById('score').textContent = `Score: ${score} / ${currentQuestion+1}`;
+            document.getElementById('user-answer').disabled = true;
+            document.getElementById('submit-btn').disabled = true;
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    document.getElementById('user-answer').disabled = false;
+                    document.getElementById('submit-btn').disabled = false;
+                    displayQuestion();
+                } else {
+                    showFinalResults();
+                }
+            }, 1200);
+        }
+
+        function showFinalResults() {
+            document.getElementById('question-number').textContent = "";
+            document.getElementById('question').textContent = "";
+            document.getElementById('user-answer').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('score').textContent = `Final Score: ${score} / ${questions.length}`;
+            document.getElementById('feedback').innerHTML = "";
+            let msg = "";
+            if (score === questions.length) {
+                msg = "🏆 <b>Excellent! Perfect Score!</b>";
+            } else if (score > questions.length * 0.7) {
+                msg = "🎉 <b>Great job! You know your stuff!</b>";
+            } else if (score > questions.length * 0.4) {
+                msg = "👍 <b>Good try! Review and try again for a higher score.</b>";
+            } else {
+                msg = "📝 <b>Keep practicing and you'll get better!</b>";
+            }
+            document.getElementById('final-results').innerHTML = msg;
+            document.getElementById('final-results').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'inline-block';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('user-answer').style.display = 'inline-block';
+            document.getElementById('submit-btn').style.display = 'inline-block';
+            displayQuestion();
+        }
+
+        // Allow enter key to submit answer
+        document.addEventListener('DOMContentLoaded', function () {
+            displayQuestion();
+            document.getElementById('user-answer').addEventListener('keyup', function (e) {
+                if (e.key === 'Enter' && !document.getElementById('user-answer').disabled) {
+                    submitAnswer();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
