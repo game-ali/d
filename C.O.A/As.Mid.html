@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Computer Architecture - Question Answers</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f9fd; color: #1a237e; margin: 0; padding: 0; }
+    header { background: linear-gradient(90deg, #005bea 0%, #3ec6e0 100%); color: white; text-align: center; padding: 24px 0 18px 0; font-size: 2em; }
+    .main { max-width: 900px; margin: 30px auto; background: #fff; border-radius: 14px; box-shadow: 0 3px 18px #005bea1a; padding: 30px 24px 22px 24px; }
+    h2 { color: #005bea; border-left: 5px solid #3ec6e0; padding-left: 12px; margin: 24px 0 14px 0; font-size: 1.19em; }
+    .q { font-weight: bold; color: #0d47a1; margin-bottom: 2px; }
+    .a { color: #2e7d32; margin-bottom: 18px;}
+    code, pre { font-size: 1.09em; background: #e8f0fe; padding: 2px 5px; border-radius: 5px;}
+    table { border-collapse: collapse; margin-bottom: 14px;}
+    td, th { border: 1px solid #cfd8dc; padding: 4px 8px;}
+    th { background: #e8f0fe;}
+    ul {margin: 5px 0 14px 20px;}
+    li {line-height: 1.7;}
+    /* Diagram Style overrides */
+    .diagram-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 auto 32px auto;
+      min-height: 470px;
+      position: relative;
+      overflow: visible;
+    }
+    .block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.13em;
+      box-shadow: 0 2px 10px #005bea22;
+      position: absolute;
+      transition: box-shadow 0.2s;
+    }
+    .block.input, .block.output {
+      width: 110px; height: 55px;
+      border-radius: 30px 12px 30px 12px/13px 28px 13px 28px;
+      background: linear-gradient(90deg, #3ec6e0 0%, #72e1e8 100%);
+      border: 3px solid #41a9c7;
+    }
+    .block.memory {
+      width: 140px; height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #f9a825 0%, #fcd463 100%);
+      border: 3px solid #e2a800;
+      left: 50%; top: 75px; transform: translate(-50%,0);
+      z-index: 2;
+    }
+    .block.alu {
+      width: 120px; height: 65px;
+      border-radius: 50% 50% 35% 35%/60% 60% 40% 40%;
+      background: linear-gradient(90deg, #64b5f6 0%, #1976d2 100%);
+      border: 3px solid #368fe7;
+    }
+    .block.control {
+      width: 110px; height: 55px;
+      background: linear-gradient(90deg, #8bc34a 0%, #b2ff59 100%);
+      border: 3px solid #6fbf33;
+      border-radius: 19px 24px 19px 24px/28px 18px 28px 18px;
+    }
+    .block.bus {
+      width: 270px; height: 28px;
+      background: linear-gradient(90deg, #bdbdbd 0%, #ececec 100%);
+      color: #333;
+      font-size: 1em;
+      font-weight: normal;
+      border-radius: 12px;
+      border: 2px dashed #a1a1a1;
+      z-index: 1;
+    }
+    /* Positioning blocks */
+    .block.input { left: 5%;  top: 180px;}
+    .block.output { right: 5%; top: 180px;}
+    .block.memory {  }
+    .block.alu { left: 29%; top: 300px;}
+    .block.control { right: 28%; top: 300px;}
+    .block.bus { left: 50%; top: 410px; transform: translate(-50%,0);}
+    /* Arrows */
+    .arrow {
+      position: absolute;
+      width: 70px; height: 2px;
+      background: linear-gradient(90deg,#005bea 60%,#3ec6e0 100%);
+      z-index: 0;
+    }
+    .arrow:after {
+      content: "";
+      position: absolute;
+      right: -7px; top: -6px;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-left: 15px solid #3ec6e0;
+    }
+    .arrow1 { left: 14%; top: 195px; transform: rotate(20deg);}
+    .arrow2 { right: 14%; top: 195px; transform: rotate(-20deg);}
+    .arrow3 { left: 38%; top: 130px; width: 70px; height: 2px; transform: rotate(65deg);}
+    .arrow4 { left: 41.5%; top: 210px; width: 70px; height: 2px; transform: rotate(115deg);}
+    .arrow5 { right: 38%; top: 130px; width: 70px; height: 2px; transform: rotate(-65deg);}
+    .arrow6 { right: 41.5%; top: 210px; width: 70px; height: 2px; transform: rotate(-115deg);}
+    .arrow7 { left: 32.5%; top: 345px; width: 2px; height: 57px; background: linear-gradient(#005bea 60%,#3ec6e0 100%);}
+    .arrow7:after { left: -8px; top: 47px; right: auto; border-left: none; border-top: 15px solid #3ec6e0; border-right: 7px solid transparent; border-bottom: 0; }
+    .arrow8 { right: 32.5%; top: 345px; width: 2px; height: 57px; background: linear-gradient(#8bc34a 60%,#b2ff59 100%);}
+    .arrow8:after { left: -8px; top: 47px; right: auto; border-left: none; border-top: 15px solid #b2ff59; border-right: 7px solid transparent; border-bottom: 0;}
+    .arrow9 { left: 49%; top: 125px; width: 2px; height: 290px; background: linear-gradient(#f9a825 60%,#fcd463 100%);}
+    .arrow9:after { left: -8px; top: 280px; right: auto; border-left: none; border-top: 15px solid #fcd463; border-right: 7px solid transparent; border-bottom: 0;}
+    .arrow10 { right: 10%; top: 410px; width: 100px; height: 2px; background: linear-gradient(90deg,#bdbdbd 60%,#ececec 100%);}
+    .arrow10:after { right: -7px; top: -6px; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-left: 15px solid #ececec;}
+    .arrow11 { left: 10%; top: 410px; width: 100px; height: 2px; background: linear-gradient(90deg,#bdbdbd 60%,#ececec 100%);}
+    .arrow11:after { right: -7px; top: -6px; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-left: 15px solid #ececec;}
+    @media (max-width: 900px) {
+      .main{padding:8px 2px;}
+      .diagram-area {min-height: 670px;}
+      .block.memory {top: 40px;}
+      .block.input, .block.output {top: 120px;}
+      .block.alu, .block.control {top: 210px;}
+      .block.bus {top: 340px;}
+      .arrow1, .arrow2 {top: 135px;}
+      .arrow3,.arrow5 {top: 80px;}
+      .arrow4,.arrow6 {top: 140px;}
+      .arrow7,.arrow8 {top: 255px;}
+      .arrow9 {top: 70px;}
+      .arrow10,.arrow11 {top: 340px;}
+    }
+    .legend {
+      margin: 38px 0 0 0;
+      padding: 18px 22px;
+      background: #e8f0fe;
+      border-radius: 12px;
+      color: #183153;
+      box-shadow: 0 2px 7px #005bea11;
+      font-size: 1.06em;
+      max-width: 760px;
+    }
+    .legend b { color: #005bea;}
+  </style>
+</head>
+<body>
+  <header>Computer Architecture: Answers</header>
+  <div class="main">
+    <div class="q">1. Write your name in ASCII code using an 8-bit code with the leftmost bit always zero, including a space between the two names and a period after the middle initial.<br>
+    (Name: Ali Abdulraman)</div>
+    <div class="a">
+      <b>Name with period after the middle initial:</b> <br>
+      <code>Ali A. Abdulraman</code><br>
+      <b>ASCII 8-bit (leftmost bit 0):</b><br>
+      <table>
+        <tr><th>Char</th><th>Binary (8-bit, leftmost 0)</th></tr>
+        <tr><td>A</td><td>01000001</td></tr>
+        <tr><td>l</td><td>01101100</td></tr>
+        <tr><td>i</td><td>01101001</td></tr>
+        <tr><td>&nbsp;(space)</td><td>00100000</td></tr>
+        <tr><td>A</td><td>01000001</td></tr>
+        <tr><td>.</td><td>00101110</td></tr>
+        <tr><td>&nbsp;(space)</td><td>00100000</td></tr>
+        <tr><td>A</td><td>01000001</td></tr>
+        <tr><td>b</td><td>01100010</td></tr>
+        <tr><td>d</td><td>01100100</td></tr>
+        <tr><td>u</td><td>01110101</td></tr>
+        <tr><td>l</td><td>01101100</td></tr>
+        <tr><td>r</td><td>01110010</td></tr>
+        <tr><td>a</td><td>01100001</td></tr>
+        <tr><td>m</td><td>01101101</td></tr>
+        <tr><td>a</td><td>01100001</td></tr>
+        <tr><td>n</td><td>01101110</td></tr>
+      </table>
+    </div>
+
+    <div class="q">2. Decode the following ASCII code: 1001010, 1001111, 1001000</div>
+    <div class="a">
+      <ul>
+        <li>1001010 = 74 (decimal) = <b>J</b></li>
+        <li>1001111 = 79 (decimal) = <b>O</b></li>
+        <li>1001000 = 72 (decimal) = <b>H</b></li>
+      </ul>
+      <b>Decoded word:</b> <code>JOH</code>
+    </div>
+
+    <div class="q">3. Convert the hex number F3A7C2 to binary and octal.</div>
+    <div class="a">
+      <b>Binary:</b> <code>1111 0011 1010 0111 1100 0010</code> <br>
+      (Or: <code>111100111010011111000010</code>)<br>
+      <b>Octal:</b> <code>36324702</code>
+      <br>
+      <ul>
+        <li>F = 1111, 3 = 0011, A = 1010, 7 = 0111, C = 1100, 2 = 0010</li>
+        <li>Group as: 011 110 011 101 001 111 100 010 = 3 6 3 2 4 7 0 2</li>
+      </ul>
+    </div>
+
+    <div class="q">4. (a) Convert 135.23 in base 8 to decimal.</div>
+    <div class="a">
+      135.23<sub>8</sub> = 1×64 + 3×8 + 5×1 + 2×(1/8) + 3×(1/64) = 64 + 24 + 5 + 0.25 + 0.046875 = <b>93.296875</b>
+    </div>
+
+    <div class="q">(b) Convert 532.65 base 10 to octal.</div>
+    <div class="a">
+      532<sub>10</sub> = 1 × 8<sup>2</sup> + 0 × 8<sup>1</sup> + 4 × 8<sup>0</sup> = <b>1014</b><sub>8</sub><br>
+      0.65 × 8 = 5.2 → 5<br>
+      0.2 × 8 = 1.6 → 1<br>
+      0.6 × 8 = 4.8 → 4<br>
+      <b>Octal:</b> <code>1014.514<sub>8</sub></code> (rounded)
+    </div>
+
+    <div class="q">5. Subtract 14 from 46 using 8-bit first complement.</div>
+    <div class="a">
+      46 = 00101110<br>
+      14 = 00001110 → 1's complement: 11110001<br>
+      Add: 00101110 + 11110001 = 10011111<br>
+      Ignore carry: Result = 00111111 = <b>32</b>
+    </div>
+
+    <div class="q">6. Add -45 to 26 using 8-bit 2's complement.</div>
+    <div class="a">
+      26 = 00011010<br>
+      -45: 45 = 00101101 → 2's comp: 11010011<br>
+      00011010 + 11010011 = 11101101<br>
+      <b>Result: 11101101 = -19 (in decimal)</b>
+    </div>
+
+    <div class="q">7. Add -45.75 to 87 using 12-bit arithmetic.</div>
+    <div class="a">
+      87 = 0000 0101 0111<br>
+      45.75 = 0010 1101 .1100 (binary: 45 = 101101, .75 = .11)<br>
+      -45.75 in 12-bit (2's comp, signed/fixed point): 1101 0010 .0100<br>
+      Add:<br>
+      0000 0101 0111<br>
+      + 1101 0010 0100<br>
+      = 1101 0111 1011<br>
+      <b>Result: Check fixed point representation, answer depends on format (approx -45.75 + 87 = 41.25)</b>
+    </div>
+
+    <div class="q">8. Convert to hexadecimal and then to octal:</div>
+    <div class="a">
+      <ul>
+        <li><b>a. 1305.375 (base 10):</b><br>
+          Hex: 1305 = 519<sub>hex</sub>; .375 × 16 = 6 → .6<br>
+          &nbsp;Hex: <code>519.6<sub>16</sub></code><br>
+          Octal: 519<sub>16</sub> = 5×16² + 1×16 + 9 = 1280 + 16 + 9 = 1305<br>
+          1305<sub>10</sub> = 2461<sub>8</sub>;<br>
+          .375 × 8 = 3 → .3<br>
+          <b>Octal: <code>2461.3<sub>8</sub></code></b>
+        </li>
+        <li><b>b. 111.33 (base 10):</b><br>
+          Hex: 111 = 6F<sub>16</sub>; .33 × 16 ≈ 5.28 → .5<br>
+          &nbsp;Hex: <code>6F.5<sub>16</sub></code><br>
+          Octal: 111<sub>10</sub> = 157<sub>8</sub>;<br>
+          .33 × 8 = 2.64 → .2<br>
+          <b>Octal: <code>157.2<sub>8</sub></code></b>
+        </li>
+        <li><b>c. 301.12 (base 10):</b><br>
+          Hex: 301 = 12D<sub>16</sub>; .12 × 16 = 1.92 ≈ .1<br>
+          &nbsp;Hex: <code>12D.1<sub>16</sub></code><br>
+          Octal: 301<sub>10</sub> = 455<sub>8</sub>;<br>
+          .12 × 8 = 0.96 → .0<br>
+          <b>Octal: <code>455.0<sub>8</sub></code></b>
+        </li>
+      </ul>
+    </div>
+
+    <div class="q">9. Add -75 to 26 using 8-bit 2's complement.</div>
+    <div class="a">
+      26 = 00011010<br>
+      75 = 01001011 → 2's comp: 10110101<br>
+      00011010 + 10110101 = 11001111<br>
+      <b>Result: 11001111 = -49 (in decimal)</b>
+    </div>
+
+    <div class="q">10. Describe the functional blocks of a computer system with aid of a diagram.</div>
+    <div class="a">
+      <ul>
+        <li><b>Input Unit:</b> Gets data from outside.</li>
+        <li><b>Memory Unit:</b> Stores data and instructions.</li>
+        <li><b>ALU:</b> Performs calculations and logic.</li>
+        <li><b>Control Unit:</b> Directs operations.</li>
+        <li><b>Output Unit:</b> Sends results out.</li>
+        <li><b>Interconnection (Bus):</b> Connects all components.</li>
+      </ul>
+      <!-- BEGIN: CSS Functional Block Diagram -->
+      <div class="diagram-area" style="height:480px; margin: 0 auto 12px auto;">
+        <!-- Blocks -->
+        <div class="block input" style="z-index:2;">Input Unit</div>
+        <div class="block output" style="z-index:2;">Output Unit</div>
+        <div class="block memory">Memory Unit</div>
+        <div class="block alu">ALU</div>
+        <div class="block control">Control Unit</div>
+        <div class="block bus" style="top:410px; left:50%; transform:translate(-50%,0);">Interconnection (Bus)</div>
+        <!-- Arrows -->
+        <div class="arrow arrow1"></div>
+        <div class="arrow arrow2"></div>
+        <div class="arrow arrow3"></div>
+        <div class="arrow arrow4"></div>
+        <div class="arrow arrow5"></div>
+        <div class="arrow arrow6"></div>
+        <div class="arrow arrow7"></div>
+        <div class="arrow arrow8"></div>
+        <div class="arrow arrow9"></div>
+        <div class="arrow arrow10"></div>
+        <div class="arrow arrow11"></div>
+      </div>
+      <div class="legend">
+        <b>Legend:</b><br>
+        <b>Input Unit:</b> Receives data and instructions from outside.<br>
+        <b>Output Unit:</b> Sends processed data to outside devices.<br>
+        <b>Memory Unit:</b> Stores data and instructions.<br>
+        <b>ALU (Arithmetic and Logic Unit):</b> Performs calculations and logic operations.<br>
+        <b>Control Unit:</b> Directs and coordinates all operations of the system.<br>
+        <b>Interconnection (Bus):</b> Pathway for data and control signals between all units.<br>
+      </div>
+      <!-- END: CSS Functional Block Diagram -->
+    </div>
+
+    <div class="q">11. Explain the parity bit and state an application.</div>
+    <div class="a">
+      <b>Parity bit:</b> An extra bit added to binary data to make the number of 1's either even (even parity) or odd (odd parity).<br>
+      <b>Application:</b> Used in error detection during data transmission (e.g. in memory, serial communication).
+    </div>
+
+    <div class="q">12. Explain the following addressing modes:</div>
+    <div class="a">
+      <b>A. Direct Address Mode:</b> The address of the operand is given directly in the instruction.<br>
+      <b>B. Immediate Addressing Mode:</b> The operand (value) itself is given in the instruction.<br>
+      <b>C. Relative Addressing Mode:</b> The address is determined by adding a constant (offset) to the current instruction address (PC).
+    </div>
+  </div>
+</body>
+</html>
